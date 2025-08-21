@@ -13,8 +13,8 @@ export default function AdminPage() {
   }
 
   // check if user has admin role
-  if (!session.user.roles?.includes("admin")) {
-    return <p>Access denied. Only admins can view this page.</p>;
+  if (!session.user?.roles || !session.user.roles.includes("admin")) {
+  return <p>Access denied. Only admins can view this page.</p>;
   }
 
   return (
