@@ -1,13 +1,11 @@
 import ProductCard from "../components/productcard";
 
-async function getProducts() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  return res.json();
-}
-
 export default async function HomePage() {
-  const products = await getProducts();
-  const featured = products.slice(0, 4); // first 4 items
+  const res = await fetch("https://fakestoreapi.com/products", {
+    cache: "no-store", // ensures fresh data every time
+  });
+  const products = await res.json();
+  const featured = products.slice(0, 4);
 
   return (
     <main className="p-8">
@@ -20,3 +18,4 @@ export default async function HomePage() {
     </main>
   );
 }
+

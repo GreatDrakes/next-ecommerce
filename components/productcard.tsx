@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
@@ -15,10 +16,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="border rounded-lg p-4 shadow-sm flex flex-col items-center">
-      <img
+      <Image
         src={product.image}
         alt={product.title}
+        width={160} // controls intrinsic size
+        height={160}
         className="h-40 object-contain mb-4"
+        priority // important for featured products above the fold
       />
       <h2 className="font-semibold text-center text-sm mb-2 line-clamp-2">
         {product.title}
