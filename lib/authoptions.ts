@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
       issuer: process.env.AUTH0_ISSUER_BASE_URL!,
       authorization: {
         params: {
-          prompt: "login", // 👈 Forces login every time
+          prompt: "login", 
         },
       },
     }),

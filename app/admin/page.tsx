@@ -9,7 +9,7 @@ export default function AdminPage() {
   const { data: session } = useSession();
 
   const reduxOrders = useSelector((state: RootState) => state.orders.allOrders);
-  const memoryOrders = getAllOrders(); // <-- added
+  const memoryOrders = getAllOrders(); 
 
   // merge both sources
   const orders = [...reduxOrders, ...memoryOrders];

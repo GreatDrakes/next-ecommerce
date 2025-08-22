@@ -19,10 +19,10 @@ export default function ProductCard({ product }: { product: Product }) {
       <Image
         src={product.image}
         alt={product.title}
-        width={160} // controls intrinsic size
+        width={160} 
         height={160}
         className="h-40 object-contain mb-4"
-        priority // important for featured products above the fold
+        priority 
       />
       <h2 className="font-semibold text-center text-sm mb-2 line-clamp-2">
         {product.title}

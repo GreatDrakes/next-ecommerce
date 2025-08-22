@@ -12,7 +12,7 @@ const mockProducts: Product[] = [
   { id: "3", title: "Iron Gauntlets", description: "Heavy gloves with unmatched strength." , image: "/images/gauntlets.png" },
 ];
 
-// Fetch all products (could be from DB or API)
+
 export async function getProducts(): Promise<Product[]> {
   return mockProducts;
 }
