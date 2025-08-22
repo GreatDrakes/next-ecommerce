@@ -25,7 +25,7 @@ export default function OrdersPage() {
     return <p className="p-6">You must be logged in to view your orders.</p>;
   }
 
-  const isAdmin = session.user?.roles?.includes("admin");
+  const isAdmin = session.user?.roles?.includes("Admin");
 
   if (isAdmin) {
     // show a special admin dashboard instead of reusing user storage
