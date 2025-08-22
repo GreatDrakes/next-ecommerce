@@ -1,3 +1,4 @@
+// OrdersPage.tsx
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -26,31 +27,51 @@ export default function OrdersPage() {
 
   const isAdmin = session.user?.roles?.includes("admin");
 
-  // always pull from localStorage
-  const allOrders: Order[] = getAllOrders();
+  if (isAdmin) {
+    // show a special admin dashboard instead of reusing user storage
+    return (
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+        <p className="text-gray-600 mb-4">
+          Welcome, {session.user?.email}. Here’s a demo view of orders:
+        </p>
 
-  // filter if not admin
-  const orders: Order[] = isAdmin
-    ? allOrders
-    : allOrders.filter((o) => o.userEmail === session.user?.email);
+        <ul className="space-y-4">
+          <li className="border rounded-lg p-4 shadow bg-white">
+            <p><strong>User:</strong> alice@example.com</p>
+            <p><strong>Items:</strong> Sword (x1), Shield (x2)</p>
+            <p><strong>Total:</strong> $149.99</p>
+          </li>
+          <li className="border rounded-lg p-4 shadow bg-white">
+            <p><strong>User:</strong> bob@example.com</p>
+            <p><strong>Items:</strong> Potion (x3)</p>
+            <p><strong>Total:</strong> $29.97</p>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+
+  // normal user flow
+  const allOrders: Order[] = getAllOrders();
+  const myOrders: Order[] = allOrders.filter(
+    (o) => o.userEmail === session.user?.email
+  );
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">
-        {isAdmin ? "All Orders (Admin)" : "My Orders"}
-      </h1>
+      <h1 className="text-2xl font-bold mb-6">My Orders</h1>
 
-      {orders.length === 0 ? (
+      {myOrders.length === 0 ? (
         <p className="text-gray-600">No orders found.</p>
       ) : (
         <div className="space-y-6">
-          {orders.map((order) => (
+          {myOrders.map((order) => (
             <div
               key={order.id}
               className="border rounded-lg p-4 shadow bg-white"
             >
               <p className="text-sm text-gray-500 mb-2">
-                <strong>User:</strong> {order.userEmail} <br />
                 <strong>Date:</strong>{" "}
                 {new Date(order.createdAt).toLocaleString()}
               </p>
