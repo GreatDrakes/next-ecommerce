@@ -1,35 +1,9 @@
 // app/api/auth/[...nextauth]/route.ts
-import NextAuth, { NextAuthOptions } from "next-auth";
-import Auth0Provider from "next-auth/providers/auth0";
+import NextAuth from "next-auth";
+import { authOptions } from "../../../../lib/authoptions";
 
-const namespace = "https://my-app.com/roles";
-
-export const authOptions: NextAuthOptions = {
-  providers: [
-    Auth0Provider({
-      clientId: process.env.AUTH0_CLIENT_ID!,
-      clientSecret: process.env.AUTH0_CLIENT_SECRET!,
-      issuer: process.env.AUTH0_ISSUER_BASE_URL!,
-    }),
-  ],
-  session: { strategy: "jwt" },
-  callbacks: {
-    async jwt({ token, account }) {
-      if (account?.id_token) {
-        const payload = JSON.parse(
-          Buffer.from(account.id_token.split(".")[1], "base64").toString()
-        );
-        token.roles = payload[namespace] || [];
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.roles = (token as any).roles || [];
-      return session;
-    },
-  },
-};
-
-// handler is still the same
+// Create the NextAuth handler with your options
 const handler = NextAuth(authOptions);
+
+// Only export HTTP methods (App Router requirement)
 export { handler as GET, handler as POST };
