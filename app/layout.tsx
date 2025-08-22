@@ -1,22 +1,24 @@
-"use client";
-
 import "./globals.css";
 import { ReactNode } from "react";
-import { Provider } from "react-redux";
-import { store } from "../store/store";
 import Header from "../components/header";
-import { SessionProvider } from "next-auth/react";
+import Providers from "./providers";
+
+export const metadata = {
+  title: {
+    default: "My E-Commerce Store",
+    template: "%s | My E-Commerce Store",
+  },
+  description: "Shop the best products online.",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <Provider store={store}>
-            <Header />
-            <main>{children}</main>
-          </Provider>
-        </SessionProvider>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );
