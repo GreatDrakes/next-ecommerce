@@ -4,6 +4,7 @@ interface CartItem {
   id: number;
   title: string;
   price: number;
+  image: string;   // ✅ add this
   quantity: number;
 }
 
