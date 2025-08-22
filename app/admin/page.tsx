@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 export default function AdminPage() {
   const { data: session } = useSession();
@@ -13,7 +13,7 @@ export default function AdminPage() {
   }
 
   // check if user has admin role
-  if (!session.user?.roles || !session.user.roles.includes("admin")) {
+  if (!session.user?.roles?.some(r => r.toLowerCase() === "admin")) {
   return <p>Access denied. Only admins can view this page.</p>;
   }
 

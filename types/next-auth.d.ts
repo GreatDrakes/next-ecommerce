@@ -9,8 +9,10 @@ declare module "next-auth" {
       roles?: string[];
     };
   }
+}
 
-  interface User {
+declare module "next-auth/jwt" {
+  interface JWT {
     roles?: string[];
   }
 }

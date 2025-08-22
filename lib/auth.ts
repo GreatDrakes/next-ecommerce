@@ -1,5 +1,5 @@
-// app/api/auth/[...nextauth]/route.ts
-import NextAuth, { NextAuthOptions } from "next-auth";
+// lib/auth.ts
+import { NextAuthOptions } from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 
 const namespace = "https://my-app.com/roles";
@@ -29,7 +29,3 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
-
-// handler is still the same
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
