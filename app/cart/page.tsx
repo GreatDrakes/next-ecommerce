@@ -22,12 +22,13 @@ export default function CartPage() {
 
     // Save order
     dispatch(
-      addOrder({
-        userEmail: session.user?.email || "guest",
-        items: cart,
-        total,
-        createdAt: new Date().toISOString(),
-      })
+    addOrder({
+      id: Date.now().toString(),   // <-- new line
+      userEmail: session.user?.email || "guest",
+      items: cart,
+      total,
+      createdAt: new Date().toISOString(),
+    })
     );
 
     // Clear cart

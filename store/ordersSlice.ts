@@ -8,6 +8,7 @@ interface OrderItem {
 }
 
 interface Order {
+  id: string;          
   userEmail: string;
   items: OrderItem[];
   createdAt: string; // ISO date string
