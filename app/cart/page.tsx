@@ -23,11 +23,11 @@ export default function CartPage() {
 
     // Save order
     const order = {
-    id: Date.now().toString(),
-    userEmail: session.user?.email || "guest",
-    items: cart,
-    total,
-    createdAt: new Date().toISOString(),
+      id: Date.now().toString(),
+      userEmail: session.user?.email || "guest",
+      items: cart,
+      total,
+      createdAt: new Date().toISOString(),
     };
 
 

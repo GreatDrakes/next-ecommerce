@@ -1,9 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { getAllOrders} from "../../lib/ordersstore"; // <-- import global memory
+import { getAllOrders } from "../../lib/ordersstore";
 
 interface OrderItem {
   title: string;
@@ -22,21 +20,19 @@ interface Order {
 export default function OrdersPage() {
   const { data: session } = useSession();
 
-  // Redux (per user orders)
-  const reduxOrders: Order[] =
-    useSelector((state: RootState) => state.orders.allOrders) ?? [];
-
   if (!session) {
     return <p className="p-6">You must be logged in to view your orders.</p>;
   }
 
-  // Check if admin
   const isAdmin = session.user?.roles?.includes("admin");
 
-  // Orders: if admin, pull all from memory, else just their own
+  // always pull from localStorage
+  const allOrders: Order[] = getAllOrders();
+
+  // filter if not admin
   const orders: Order[] = isAdmin
-    ? getAllOrders()
-    : reduxOrders.filter((o) => o.userEmail === session.user?.email);
+    ? allOrders
+    : allOrders.filter((o) => o.userEmail === session.user?.email);
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
