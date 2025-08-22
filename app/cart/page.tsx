@@ -5,6 +5,7 @@ import { removeFromCart, checkout } from "../../store/cartSlice";
 import { addOrder } from "../../store/ordersSlice";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { addOrderToMemory } from "../../lib/ordersstore"; 
 
 export default function CartPage() {
   const cart = useSelector((state: RootState) => state.cart.items);
@@ -21,15 +22,18 @@ export default function CartPage() {
     }
 
     // Save order
-    dispatch(
-    addOrder({
-      id: Date.now().toString(),   // <-- new line
-      userEmail: session.user?.email || "guest",
-      items: cart,
-      total,
-      createdAt: new Date().toISOString(),
-    })
-    );
+    const order = {
+    id: Date.now().toString(),
+    userEmail: session.user?.email || "guest",
+    items: cart,
+    total,
+    createdAt: new Date().toISOString(),
+    };
+
+
+    dispatch(addOrder(order));
+
+    addOrderToMemory(order);
 
     // Clear cart
     dispatch(checkout());
