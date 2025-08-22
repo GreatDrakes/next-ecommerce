@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
     // (optional) Don’t block builds on type errors
     ignoreBuildErrors: false, // set true if you also want to skip TS errors
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "fakestoreapi.com",
+        pathname: "/img/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
