@@ -3,10 +3,16 @@
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { getAllOrders } from "../../lib/ordersstore"; 
 
 export default function AdminPage() {
   const { data: session } = useSession();
-  const orders = useSelector((state: RootState) => state.orders.allOrders);
+
+  const reduxOrders = useSelector((state: RootState) => state.orders.allOrders);
+  const memoryOrders = getAllOrders(); // <-- added
+
+  // merge both sources
+  const orders = [...reduxOrders, ...memoryOrders];
 
   if (!session) {
     return <p>You must be logged in to view this page.</p>;
@@ -14,7 +20,7 @@ export default function AdminPage() {
 
   // check if user has admin role
   if (!session.user?.roles?.some(r => r.toLowerCase() === "admin")) {
-  return <p>Access denied. Only admins can view this page.</p>;
+    return <p>Access denied. Only admins can view this page.</p>;
   }
 
   return (
