@@ -28,7 +28,7 @@ export default function OrdersPage() {
   const isAdmin = session.user?.roles?.includes("Admin");
 
   if (isAdmin) {
-    // show a special admin dashboard instead of reusing user storage
+    
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
